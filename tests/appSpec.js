@@ -1,5 +1,5 @@
 // Helps to mimic div creations
-const TEST_PLAYERS = ["Spiderman","Captain America"];
+const TEST_PLAYERS = ["Spiderman", "Captain America"];
 const TEST_PLAYER = [0, "Spiderman", 'hero'];
 let HTMLElements = {};
 document.getElementById = jasmine.createSpy('HTML Element').and.callFake(function (ID) {
@@ -213,53 +213,53 @@ describe("Setting up Super War", function () {
   });
 
 
-  describe("Handling player selection",function(){
+  describe("Handling player selection", function () {
 
-    beforeEach(function(){
+    beforeEach(function () {
       superWar = new Superwar(TEST_PLAYERS);
     });
 
     it("should return HTML element with score\
-     for given player types",function(){
-     superWar.players.map(player => player.selected = true);
-     superWar.players[1].strength = 0;
-     superWar.announceWinner = jasmine.createSpy("announceWinner");
-     superWar.fight()
-     let fragment = document.getElementById('score');
+     for given player types", function () {
+      superWar.players.map(player => player.selected = true);
+      superWar.players[1].strength = 0;
+      superWar.announceWinner = jasmine.createSpy("announceWinner");
+      superWar.fight()
+      let fragment = document.getElementById('score');
 
-     expect(isElement(fragment)).toBeTrue();
-     expect(fragment.textContent).toBe('1 - 0');
-   });
+      expect(isElement(fragment)).toBeTrue();
+      expect(fragment.textContent).toBe('1 - 0');
+    });
 
     it("should return clash when there is a fight\
-    ",function(){
+    ", function () {
       superWar.players.map(player => player.selected = true);
-  
+
       expect(superWar.isFight()).toBe('clash');
     });
 
     it("should return total score of the\
-    team",function(){
-     superWar.players[1].strength = 0;
-     superWar.players[0].wins = 1;
-     let score = superWar.calculateScore();
-     let expectedScore = 1;
+    team", function () {
+      superWar.players[1].strength = 0;
+      superWar.players[0].wins = 1;
+      let score = superWar.calculateScore();
+      let expectedScore = 1;
 
-     expect(score['hero']).toBe(expectedScore);
-   });
+      expect(score['hero']).toBe(expectedScore);
+    });
 
     it("should return hero when villains total\
-    score reaches zero",function(){
-     superWar.players[1].strength = 0;
+    score reaches zero", function () {
+      superWar.players[1].strength = 0;
 
-     expect(superWar.checkWin()).toBe('hero');
+      expect(superWar.checkWin()).toBe('hero');
     });
 
     it("should return total strength\
-    of the team",function(){
-     let expectedStrength = superWar.players[0].strength;
+    of the team", function () {
+      let expectedStrength = superWar.players[0].strength;
 
-     expect(superWar.totalStrength('hero')).toBe(expectedStrength);
+      expect(superWar.totalStrength('hero')).toBe(expectedStrength);
     });
 
   });

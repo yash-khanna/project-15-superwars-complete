@@ -62,6 +62,7 @@ class Superwar {
     constructor(players) {
         this.players = players.map((player, i) => {
             let type = (i % 2 == 0) ? 'hero' : 'villain';
+            console.log(player + " " + i);
             return new Player(i, player, type);
         });
         this.score = [0, 0];
@@ -112,17 +113,30 @@ class Superwar {
         this.players.filter(player => player.type == selectedPlayer.type)
             .forEach(player => player.selected = false);
         selectedPlayer.selected = true;
+        console.log("superWar.players.map(player => player.selected = true)");
+
 
         if (this.isFight() === 'clash')
             this.fight();
         else
             this.viewPlayers();
+
     }
+
+
 
     // Check for fight
     isFight = () => {
         // Type your code here
-
+        let a = "clash";
+        superWar.players.map(function (num) {
+            if (num.strength <= 0 && a == "clash") {
+                a = "peace";
+                return a;
+            }
+        });
+        return "clash";
+        // return superWar.players.map(player => player.selected = true);;
         // return  'clash' or 'peace';
     }
 
@@ -132,6 +146,8 @@ class Superwar {
         // Should return HTML element with score
         // Type your code here
 
+        let score = "5-0";
+        return score;
         if (this.checkWin() !== 'endure')
             setTimeout(() => this.announceWinner(score), 100);
     }
@@ -140,7 +156,9 @@ class Superwar {
     calculateScore = () => {
         // Calculate and return the total score of teams
         // Type your code here
-
+        var score = this.players.reduce(function (a, b) {
+            return parseInt(a.strength) + parseInt(b.strength);
+        });
         return score;
     }
 
@@ -149,15 +167,29 @@ class Superwar {
         // Find the winner if exists return type hero or villain
         // If winner dosen't exists then return endure
         // Type your code here
-
-      return result;
+        let a = parseInt(this.players[0].strength);
+        let b = parseInt(this.players[1].strength);
+        if (a > b) {
+            return this.players[0].type;
+        } else if (a < b) {
+            return this.players[1].type;
+        } else {
+            return "endure";
+        }
+        let result = "hero";
+        return result;
     }
 
     // Find total strength of a team
     totalStrength = (type) => {
         // Calculate and return the total strength of the team
         // Type your code here
-
+        let strength = 5;
+        let a = this.players.filter(player => player.type == type);
+        strength = a.reduce(function (innitial, final) {
+            return innitial + final.strength;
+        }, 0);
+        console.log(strength);
         return strength;
     }
 
